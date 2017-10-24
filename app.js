@@ -5,6 +5,12 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var expressValidator = require('express-validator');
+var app=express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(expressValidator()); // Add this after the bodyParser middlewares!
 var mongoose=require('mongoose');
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
@@ -58,6 +64,7 @@ db=database;
 var index = require('./routes/index');
 var users = require('./routes/users');
 var filehandler=require('./routes/filehandler');
+var catalog = require('./routes/catalog');
 
 var app = express();
 
@@ -82,6 +89,7 @@ app.use(function(req,res,next){
 app.use('/', index);
 app.use('/users', users);
 app.use('/fileoperations',filehandler);
+app.use('/catalogs',catalog);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
