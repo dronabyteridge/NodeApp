@@ -68,6 +68,7 @@ exports.genre_create_post = function(req, res) {
                   
                   if (found_genre) { 
                       //Genre exists, redirect to its detail page
+                      //res.send({name:found_genre.name});
                       res.redirect(found_genre.url);
                   }
                   else {

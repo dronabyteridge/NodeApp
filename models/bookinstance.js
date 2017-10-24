@@ -13,7 +13,7 @@ var BookInstanceScheme=Schema({
 BookInstanceScheme
 .virtual('url')
 .get(function () {
-  return '/catalog/bookinstance/' + this._id;
+  return '/catalogs/bookinstance/' + this._id;
 });
 BookInstanceScheme
 .virtual('due_back_formatted')

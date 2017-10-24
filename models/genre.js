@@ -11,6 +11,6 @@ var GenerSchema=Schema({
 GenerSchema
 .virtual('url')
 .get(function () {
-  return '/catalog/genere/' + this._id;
+  return '/catalogs/genre/' + this._id;
 });
 module.exports=mongoose.model('Genre',GenerSchema);

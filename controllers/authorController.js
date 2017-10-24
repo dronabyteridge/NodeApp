@@ -34,12 +34,44 @@ exports.author_detail=function(req,res)
 };
 // Display Author create form on GET
 exports.author_create_get = function(req, res) {
-    res.send('NOT IMPLEMENTED: Author create GET');
+    res.render('author_form', { title: 'Create Author'});
 };
 
 // Handle Author create on POST
 exports.author_create_post = function(req, res) {
-    res.send('NOT IMPLEMENTED: Author create POST');
+    req.checkBody('fname', 'First name must be specified.').notEmpty(); //We won't force Alphanumeric, because people might have spaces.
+    req.checkBody('address', 'Address must be specified.').notEmpty();
+    req.checkBody('address', 'Address must be alphanumeric text.').isAlpha();
+   // req.checkBody('dob', 'Invalid date').optional({ checkFalsy: true }).isDate();
+    //req.checkBody('dod', 'Invalid date').optional({ checkFalsy: true }).isDate();
+    
+    req.sanitize('fname').escape();
+    req.sanitize('address').escape();
+    req.sanitize('fname').trim();     
+    req.sanitize('address').trim();
+    req.sanitize('dob').toDate();
+    req.sanitize('dod').toDate();
+
+    var errors = req.validationErrors();
+    
+    var author = new Author(
+      { fname: req.body.fname, 
+        address: req.body.address, 
+        dob: req.body.dob,
+        dod: req.body.dod
+       });
+       
+    if (errors) {
+        res.render('author_form', { title: 'Create Author', author: author, errors: errors});
+    return;
+    } 
+    else {
+    // Data from form is valid
+    
+        author.save(function (err) {
+               res.redirect(author.url);
+            });
+    }
 };
 
 // Display Author delete form on GET

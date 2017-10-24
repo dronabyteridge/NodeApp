@@ -10,7 +10,8 @@ var app=express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(expressValidator()); // Add this after the bodyParser middlewares!
+app.use(cookieParser());
+app.use(expressValidator()); 
 var mongoose=require('mongoose');
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
@@ -66,8 +67,6 @@ var users = require('./routes/users');
 var filehandler=require('./routes/filehandler');
 var catalog = require('./routes/catalog');
 
-var app = express();
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -75,9 +74,6 @@ app.set('view engine', 'jade');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req,res,next){
   req.db = db;
