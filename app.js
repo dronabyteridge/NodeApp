@@ -17,6 +17,16 @@ MongoClient.connect(mongo_url,function(err,database)
   {
     db=database;
   console.log("Connected correctly to server.");
+  db.collection('user', function (err, collection) {
+    
+    
+    db.collection('user').count(function (err, count) {
+        if (err) throw err;
+        
+        console.log('Total Rows: ' + count);
+    });
+
+});
   }
  
 
