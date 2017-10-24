@@ -5,13 +5,21 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose=require('mongoose');
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var url = 'mongodb://localhost:27017/testdb';
 var mongo_url='mongodb://dronasahoo:byteridge024426@user-shard-00-00-fiwva.mongodb.net:27017,user-shard-00-01-fiwva.mongodb.net:27017,user-shard-00-02-fiwva.mongodb.net:27017/test?ssl=true&replicaSet=User-shard-0&authSource=admin';
 var db;
+
+mongoose.connect(mongo_url,{
+useMongoClient:true
+});
+var database=mongoose.connection;
+database.on('error',console.error.bind(console,'connection error'));
+db=database;
 //connect to atlas mongo db
-MongoClient.connect(mongo_url,function(err,database)
+/*MongoClient.connect(mongo_url,function(err,database)
 {
   if(!err)
   {
@@ -30,7 +38,7 @@ MongoClient.connect(mongo_url,function(err,database)
   }
  
 
-});
+});**/
 //connect to local db test db
 /*MongoClient.connect(url, function(err, dbs) {
   assert.equal(null, err);
